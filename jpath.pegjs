@@ -1,3 +1,7 @@
+start
+  = '/' step jpath
+  / jpath
+
 jpath
   = step jpath
   / predicate jpath
@@ -5,40 +9,53 @@ jpath
 
 step
   = '.' name
+  / '.*'
 
 predicate
-  = '[' expr ']'
+  = '[' _ expr _ ']'
 
 expr
   = or
 
 or
-  = and '||' or
+  = and _ '||' _ or
   / and
 
 and
-  = cmp '&&' and
+  = cmp _ '&&' _ and
   / cmp
 
 cmp
-  = op '<' op
-  / op '>' op
-  / op '>=' op
-  / op '<=' op
+  = op _ '<' _ op
+  / op _ '>' _ op
+  / op _ '>=' _ op
+  / op _ '<=' _ op
+  / op _ '==' _ op
+  / op _ '!=' _ op
   / '!' op
   / op
 
 op
   = step
+  / '.'
   / digit
   / string
 
+string
+  = '"' [^"]* '"'
+
 name
-  = [a-z]+
+  = letter id*
+  / letter id* '-' id+
 
 digit
   = [0-9]+
 
-string
-  = '"' [a-z]* '"'
+letter
+  = [a-zA-Z]
+id
+  = [a-zA-Z0-9_]
+_
+  = ' ' _
+  / ''
 
