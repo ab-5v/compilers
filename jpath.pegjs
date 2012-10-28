@@ -36,10 +36,13 @@ cmp
   / op
 
 op
-  = step
+  = path
   / '.'
   / digit
   / string
+
+path
+  = step+
 
 string
   = '"' [^"]* '"'
