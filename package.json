@@ -1,0 +1,21 @@
+{
+    "name": "compilers",
+    "version": "0.0.1",
+    "author": {
+        "name": "Artur Burtsev",
+        "email": "artjock@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/artjock/requirer.git"
+    },
+    "engines": {
+        "node": ">= 0.6.x"
+    },
+    "devDependencies": {
+        "mocha": "*",
+        "expect.js": "*",
+        "pegjs": "*"
+    },
+    "private": true
+}
