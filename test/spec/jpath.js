@@ -12,66 +12,39 @@ beforeEach(function() {
 });
 
 describe('jpath', function() {
+    var tests = {
+        '.foo': true,
+        '/.foo': true,
+        '.*': true,
+        '.foo.bar': true,
+        '.foo[1]': true,
+        '.foo[.bar]': true,
+        '.foo[.bar.loo]': true,
+        '.foo[!.bar]': true,
+        '.foo[.bar != "k"]': true,
+        '.foo[. == "k"]': true,
+        '.foo[.bar == "k"]': true,
+        '.foo[1].bar': true,
+        '.c.d[.e == "3"].d[1]': true,
+        '.foo[!.bar && !.loo]': true,
+        '.foo[.bar < .loo < .koo]': false,
+        '.foo[.bar == "k" || .loo != "m"]': true
+    };
 
-    it('.foo', function() {
-        this.parser('.foo').should.not.throw();
-    });
+    for (var test in tests) {
 
-    it('/.foo', function() {
-        this.parser('/.foo').should.not.throw();
-    });
+        (function(title, pass) {
+            it(title, function() {
+                var result = this.parser(title);
 
-    it('.*', function() {
-        this.parser('.*').should.not.throw();
-    });
+                if (pass) {
+                    result.should.not.throw();
+                } else {
+                    result.should.throw();
+                }
+            });
+        })(test, tests[test])
 
-    it('.foo.bar', function() {
-        this.parser('.foo.bar').should.not.throw();
-    });
-
-    it('.foo[1]', function() {
-        this.parser('.foo[1]').should.not.throw();
-    });
-
-    it('.foo[.bar]', function() {
-        this.parser('.foo[.bar]').should.not.throw();
-    });
-
-    it('.foo[.bar.loo]', function() {
-        this.parser('.foo[.bar.loo]').should.not.throw();
-    });
-
-    it('.foo[!.bar]', function() {
-        this.parser('.foo[!.bar]').should.not.throw();
-    });
-
-    it('.foo[.bar != "k"]', function() {
-        this.parser('.foo[.bar != "k"]').should.not.throw();
-    });
-
-    it('.foo[. == "k"]', function() {
-        this.parser('.foo[. == "k"]').should.not.throw();
-    });
-
-    it('.foo[.bar == "k"]', function() {
-        this.parser('.foo[.bar == "k"]').should.not.throw();
-    });
-
-    it('.foo[1].bar', function() {
-        this.parser('.foo[1].bar').should.not.throw();
-    });
-
-    it('.c.d[.e == "3"].d[1]', function() {
-        this.parser('.c.d[.e == "3"].d[1]').should.not.throw();
-    });
-
-    it('.foo[!.bar && !.loo]', function() {
-        this.parser('.foo[!.bar && !.loo]').should.not.throw();
-    });
-
-    it('.foo[.bar == "k" || .loo != "m"]', function() {
-        this.parser('.foo[.bar == "k" || .loo != "mmm"]').should.not.throw();
-    });
+    }
 
 });
-
