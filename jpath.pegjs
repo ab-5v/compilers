@@ -32,8 +32,9 @@ cmp
   / op _ '<=' _ op
   / op _ '==' _ op
   / op _ '!=' _ op
-  / '!' op
-  / op
+  / '!' path
+  / path
+  / digit
   / '(' _ or _ ')'
 
 op
