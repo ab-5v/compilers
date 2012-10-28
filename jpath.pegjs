@@ -34,6 +34,7 @@ cmp
   / op _ '!=' _ op
   / '!' op
   / op
+  / '(' _ or _ ')'
 
 op
   = path

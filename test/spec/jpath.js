@@ -28,6 +28,10 @@ describe('jpath', function() {
         '.c.d[.e == "3"].d[1]': true,
         '.foo[!.bar && !.loo]': true,
         '.foo[.bar < .loo < .koo]': false,
+        '.foo[(.bar || .loo) && .abc]': true,
+        '.foo[(.bar) || (.loo) && .abc]': true,
+        '.foo[((.bar) || (.loo) && (.abc))]': true,
+        '.foo[(.bar || (.loo) && .abc]': false,
         '.foo[.bar == "k" || .loo != "m"]': true
     };
 
