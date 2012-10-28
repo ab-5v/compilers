@@ -1,72 +1,76 @@
 var fs = require('fs');
 var PEG = require('pegjs');
-var expect = require('expect.js');
 
 beforeEach(function() {
     var grammar = fs.readFileSync('./jpath.pegjs', 'utf8');
-    this.parser = PEG.buildParser( grammar );
+    var parser = PEG.buildParser( grammar );
+    this.parser = function(jpath) {
+        return function() {
+            parser.parse(jpath);
+        }
+    }
 });
 
 describe('jpath', function() {
 
     it('.foo', function() {
-        expect(this.parser.parse('.foo')).to.be.ok();
+        this.parser('.foo').should.not.throw();
     });
 
     it('/.foo', function() {
-        expect(this.parser.parse('/.foo')).to.be.ok();
+        this.parser('/.foo').should.not.throw();
     });
 
     it('.*', function() {
-        expect(this.parser.parse('.*')).to.be.ok();
+        this.parser('.*').should.not.throw();
     });
 
     it('.foo.bar', function() {
-        expect(this.parser.parse('.foo.bar')).to.be.ok();
+        this.parser('.foo.bar').should.not.throw();
     });
 
     it('.foo[1]', function() {
-        expect(this.parser.parse('.foo[1]')).to.be.ok();
+        this.parser('.foo[1]').should.not.throw();
     });
 
     it('.foo[.bar]', function() {
-        expect(this.parser.parse('.foo[.bar]')).to.be.ok();
+        this.parser('.foo[.bar]').should.not.throw();
     });
 
     it('.foo[.bar.loo]', function() {
-        expect(this.parser.parse('.foo[.bar.loo]')).to.be.ok();
+        this.parser('.foo[.bar.loo]').should.not.throw();
     });
 
     it('.foo[!.bar]', function() {
-        expect(this.parser.parse('.foo[!.bar]')).to.be.ok();
+        this.parser('.foo[!.bar]').should.not.throw();
     });
 
     it('.foo[.bar != "k"]', function() {
-        expect(this.parser.parse('.foo[.bar != "k"]')).to.be.ok();
+        this.parser('.foo[.bar != "k"]').should.not.throw();
     });
 
     it('.foo[. == "k"]', function() {
-        expect(this.parser.parse('.foo[. == "k"]')).to.be.ok();
+        this.parser('.foo[. == "k"]').should.not.throw();
     });
 
     it('.foo[.bar == "k"]', function() {
-        expect(this.parser.parse('.foo[.bar == "k"]')).to.be.ok();
+        this.parser('.foo[.bar == "k"]').should.not.throw();
     });
 
     it('.foo[1].bar', function() {
-        expect(this.parser.parse('.foo[1].bar')).to.be.ok();
+        this.parser('.foo[1].bar').should.not.throw();
     });
 
     it('.c.d[.e == "3"].d[1]', function() {
-        expect(this.parser.parse('.c.d[.e == "3"].d[1]')).to.be.ok();
+        this.parser('.c.d[.e == "3"].d[1]').should.not.throw();
     });
 
     it('.foo[!.bar && !.loo]', function() {
-        expect(this.parser.parse('.foo[!.bar && !.loo]')).to.be.ok();
+        this.parser('.foo[!.bar && !.loo]').should.not.throw();
     });
 
     it('.foo[.bar == "k" || .loo != "m"]', function() {
-        expect(this.parser.parse('.foo[.bar == "k" || .loo != "mmm"]')).to.be.ok();
+        this.parser('.foo[.bar == "k" || .loo != "mmm"]').should.not.throw();
     });
 
 });

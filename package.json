@@ -14,7 +14,7 @@
     },
     "devDependencies": {
         "mocha": "*",
-        "expect.js": "*",
+        "should": "*",
         "pegjs": "*"
     },
     "private": true
